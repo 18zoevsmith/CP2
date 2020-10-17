@@ -1,0 +1,105 @@
+<html>
+<style>
+body {
+  	background-image: url('shbg.jpg');
+  	background-size: cover;
+  	background-repeat: repeat;
+}
+h1 {
+	font-size: 55px;
+	color: black;
+	text-align: center;
+}
+form {
+	text-align: center;
+	font-size: 40px;
+	color: black;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+p {
+	text-align:center;
+	color:black;
+	font-weight: bold;
+  font-size: 30px;
+}
+h2 {
+	text-align:center;
+	color:black;
+	font-size: 40px;
+}
+h3 {
+	text-align:center;
+}
+</style>
+	<head>
+		<title>If Iron Man isn't your favorite superhero, we won't get along.</title>
+	</head>
+	<body>
+		<h1> Superhero and Villian Index </h1>
+    <form>
+			Enter A Superhero or a Villian: <input type="text" id="superhero" value=""><br>
+      <button id="get" class="pure-button pure-button-primary">Enter</button>
+		</form>
+    <div id="person"></div>
+		<hr>
+		<p> Github Repository: <a href="https://github.com/BYU-CS-260-Winter-2020/lab-2-weather-app-18zoevsmith.git">here</a>!</p>
+	</body>
+</html>
+		<script>
+      document.getElementById('get').addEventListener('click', getSuperhero);
+      function getSuperhero(event) {
+			    event.preventDefault();
+          var sHero = document.getElementById("superhero").value;
+          const proxyurl = "https://cors-anywhere.herokuapp.com/";
+          let url = "https://superheroapi.com/api/712696476343282/search/" + sHero;
+          fetch(proxyurl + url)
+            .then(function(response) {
+              return response.json();
+            }).then(function(json) {
+              console.log(json);
+              var length = json.results.length;
+              var output = "";
+              for (i = 0; i < length; i++)
+              {
+                var num1 = "<img src=\""
+                num1 += json.results[i].image.url
+                num1 +="\" width=50% class=\"center\">"
+                num1 += "<h2> Appearance </h2><p> Gender: "
+                num1 += json.results[i].appearance.gender
+                num1 += "<br> Height: "
+                num1 += json.results[i].appearance.height[0]
+                num1 += "<br> Race: "
+                num1 += json.results[i].appearance.race
+                num1 += "<br> Weight: "
+                num1 += json.results[i].appearance.weight[0]
+                num1 +="</p><h2> Biography </h2><p> Full Name: "
+                num1 += json['results'][i]['biography']['full-name']
+                num1 += "<br> Side: "
+                num1 += json['results'][i]['biography']['alignment']
+                num1 += "<br> Alter-Egos: "
+                num1 += json['results'][i]['biography']['alter-egos']
+                num1 += "<br> Place of Birth: "
+                num1 += json['results'][i]['biography']['place-of-birth']
+                num1 +="</p><h2> Stats </h2><p> Combat: "
+                num1 += json['results'][i]['powerstats']['combat']
+                num1 += "<br> Durability: "
+                num1 += json['results'][i]['powerstats']['durability']
+                num1 += "<br> Intelligence: "
+                num1 += json['results'][i]['powerstats']['intelligence']
+                num1 += "<br> Power: "
+                num1 += json['results'][i]['powerstats']['power']
+                num1 += "<br> Speed: "
+                num1 += json['results'][i]['powerstats']['speed']
+                num1 += "<br> Strength: "
+                num1 += json['results'][i]['powerstats']['strength']
+                num1 +="</p>"
+                output += num1;
+              }
+              document.getElementById("person").innerHTML = output;
+            });
+      }
+    </script>
